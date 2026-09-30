@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+    <title>My Personal Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="topbar">
+
+        <div>
+            <div class="eyebrow">MY PERSONAL PLANNER ✨</div>
+            <h1>My Planner</h1>
+            <p id="pretty-date"></p>
+        </div>
+
+        <div class="today-progress">
+            <span>Today's progress</span>
+            <strong id="header-progress">0%</strong>
+        </div>
+
+    </header>
+
+
+    <section class="date-card">
+
+        <button id="previous-day" class="date-arrow">‹</button>
+
+        <div class="date-center">
+
+            <span class="date-label">CURRENT DAY</span>
+
+            <input type="date" id="date-picker">
+
+            <button id="today-button" class="today-button">
+                Today
+            </button>
+
+        </div>
+
+        <button id="next-day" class="date-arrow">›</button>
+
+    </section>
+
+
+    <section class="note-card">
+
+        <div class="note-icon">📝</div>
+
+        <div class="note-content">
+
+            <strong>Today's note</strong>
+
+            <textarea
+                id="daily-note"
+                placeholder="Write something about your day..."
+            ></textarea>
+
+        </div>
+
+    </section>
+
+
+    <main>
+
+        <div id="categories-container"></div>
+
+
+        <button
+            id="add-category"
+            class="add-category-button"
+        >
+            <span class="big-plus">＋</span>
+
+            <span>
+                <strong>Add category</strong>
+                <small>Create a new list of activities</small>
+            </span>
+        </button>
+
+
+        <section class="stats-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="eyebrow">TODAY</span>
+                    <h2>Daily Progress</h2>
+                </div>
+
+                <strong id="daily-percentage">0%</strong>
+
+            </div>
+
+            <div class="progress-track">
+                <div id="daily-progress-fill"></div>
+            </div>
+
+            <p id="daily-progress-text">
+                0 of 0 tasks completed
+            </p>
+
+        </section>
+
+
+        <section class="stats-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="eyebrow">THIS WEEK</span>
+                    <h2>Weekly Progress</h2>
+                </div>
+
+            </div>
+
+            <div id="weekly-chart" class="weekly-chart"></div>
+
+            <div id="weekly-summary" class="summary-text"></div>
+
+        </section>
+
+
+        <section class="stats-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="eyebrow">THIS MONTH</span>
+                    <h2>Monthly Progress</h2>
+                </div>
+
+            </div>
+
+            <div id="monthly-chart" class="monthly-chart"></div>
+
+            <div id="monthly-summary" class="summary-text"></div>
+
+        </section>
+
+
+        <section class="stats-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="eyebrow">ANALYSIS</span>
+                    <h2>Activity Overview</h2>
+                </div>
+
+            </div>
+
+            <div id="activity-analysis"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- TASK MODAL -->
+<!-- ========================= -->
+
+<div id="task-modal" class="modal-overlay">
+
+    <div class="modal">
+
+        <button
+            id="close-task-modal"
+            class="modal-close"
+        >×</button>
+
+        <div class="modal-icon">✨</div>
+
+        <h2>Add new task</h2>
+
+        <p class="modal-subtitle">
+            Add something you want to accomplish.
+        </p>
+
+        <label>Task name</label>
+
+        <input
+            id="task-name-input"
+            class="modal-input"
+            type="text"
+            placeholder="e.g. Read 20 pages"
+        >
+
+        <label>Choose an icon</label>
+
+        <div
+            id="task-emoji-picker"
+            class="emoji-picker"
+        ></div>
+
+        <div class="custom-emoji-row">
+
+            <input
+                id="task-icon-input"
+                class="modal-input icon-input"
+                type="text"
+                value="✨"
+                maxlength="4"
+                placeholder="✨"
+            >
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                id="cancel-task-modal"
+                class="modal-cancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="save-task-modal"
+                class="modal-save"
+            >
+                Add task
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- CATEGORY MODAL -->
+<!-- ========================= -->
+
+<div id="category-modal" class="modal-overlay">
+
+    <div class="modal">
+
+        <button
+            id="close-category-modal"
+            class="modal-close"
+        >×</button>
+
+        <div class="modal-icon">🗂️</div>
+
+        <h2>Add new category</h2>
+
+        <p class="modal-subtitle">
+            Create a new list for your activities.
+        </p>
+
+        <label>Category name</label>
+
+        <input
+            id="category-name-input"
+            class="modal-input"
+            type="text"
+            placeholder="e.g. University"
+        >
+
+        <label>Choose an icon</label>
+
+        <div
+            id="category-emoji-picker"
+            class="emoji-picker"
+        ></div>
+
+        <div class="custom-emoji-row">
+
+            <input
+                id="category-icon-input"
+                class="modal-input icon-input"
+                type="text"
+                value="✨"
+                maxlength="4"
+                placeholder="✨"
+            >
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                id="cancel-category-modal"
+                class="modal-cancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="save-category-modal"
+                class="modal-save"
+            >
+                Add category
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- EMOJI EDIT MODAL -->
+<!-- ========================= -->
+
+<div id="emoji-edit-modal" class="modal-overlay">
+
+    <div class="modal emoji-edit-modal">
+
+        <button
+            id="close-emoji-edit-modal"
+            class="modal-close"
+        >×</button>
+
+        <div class="modal-icon">🎀</div>
+
+        <h2>Choose an icon</h2>
+
+        <p
+            id="emoji-edit-subtitle"
+            class="modal-subtitle"
+        >
+            Pick an emoji for this item.
+        </p>
+
+        <div
+            id="edit-emoji-picker"
+            class="emoji-picker large"
+        ></div>
+
+        <label>Or type your own</label>
+
+        <input
+            id="edit-custom-emoji"
+            class="modal-input icon-input"
+            type="text"
+            maxlength="4"
+            placeholder="✨"
+        >
+
+        <div class="modal-actions">
+
+            <button
+                id="cancel-emoji-edit"
+                class="modal-cancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="save-emoji-edit"
+                class="modal-save"
+            >
+                Save icon
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
